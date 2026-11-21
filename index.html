@@ -463,6 +463,22 @@
             return 'BELUM LUNAS';
         }
 
+        // Normalisasi nomor HP agar angka 0 di depan selalu tampil (misal 85236378731 -> 085236378731)
+        function normalizePhone(rawPhone) {
+            if (rawPhone === null || rawPhone === undefined) return '';
+            let phone = String(rawPhone).trim();
+            if (!phone) return '';
+            if (phone.startsWith('+62')) {
+                phone = '0' + phone.slice(3).replace(/[^0-9]/g, '');
+            } else if (/^628[0-9]+$/.test(phone.replace(/[^0-9]/g, ''))) {
+                const digits = phone.replace(/[^0-9]/g, '');
+                phone = '0' + digits.slice(2);
+            } else if (/^8[0-9]{7,}$/.test(phone)) {
+                phone = '0' + phone;
+            }
+            return phone;
+        }
+
         // State Aplikasi
         let billsData = [];
         let dbInstance = null;
@@ -588,6 +604,26 @@
                 return matchBulan && matchTahun && matchStatus && matchAlamat && matchSearch;
             });
 
+            // Urutkan otomatis berdasarkan: 1. Petugas, 2. Status, 3. Alamat, 4. Nama Pelanggan
+            const statusOrder = { 'BELUM LUNAS': 1, 'LUNAS': 2, 'OFF': 3 };
+            filteredData.sort((a, b) => {
+                const petA = String(a.petugas || '').trim().toUpperCase();
+                const petB = String(b.petugas || '').trim().toUpperCase();
+                if (petA !== petB) return petA.localeCompare(petB, 'id');
+
+                const stA = statusOrder[normalizeStatus(a.status)] || 99;
+                const stB = statusOrder[normalizeStatus(b.status)] || 99;
+                if (stA !== stB) return stA - stB;
+
+                const addrA = String(a.address || '').trim().toUpperCase();
+                const addrB = String(b.address || '').trim().toUpperCase();
+                if (addrA !== addrB) return addrA.localeCompare(addrB, 'id');
+
+                const nameA = String(a.custName || '').trim().toUpperCase();
+                const nameB = String(b.custName || '').trim().toUpperCase();
+                return nameA.localeCompare(nameB, 'id');
+            });
+
             // Hitung Statistik Total dari seluruh data terfilter
             let countLunas = 0, nomLunas = 0;
             let countBelum = 0, nomBelum = 0;
@@ -656,8 +692,8 @@
                 } else if (currentStatus === 'OFF') {
                     selectStyle = 'bg-slate-100 text-slate-700 border-slate-300';
                 }
-
-                const cleanPhone = (item.phone || '').replace(/[^0-9]/g, '');
+                const cleanPhone = normalizePhone(item.phone).replace(/[^0-9]/g, '');
+                const displayPhone = normalizePhone(item.phone);
                 const waPhone = cleanPhone.startsWith('0') ? '62' + cleanPhone.slice(1) : cleanPhone;
                 const waMessage = encodeURIComponent(`Halo ${String(item.custName || '').toUpperCase()}, rincian tagihan internet Anda periode ${NAMA_BULAN[item.bulan]} ${item.tahun} sebesar ${formatRupiah(item.total)}. Status: ${currentStatus}. Terima kasih.`);
 
@@ -684,10 +720,10 @@
                             </div>
                             <div class="text-slate-500"><i class="fa-solid fa-user-gear text-slate-400 mr-1"></i>Petugas: <strong class="text-slate-700">${escapeHtml(item.petugas || '-')}</strong></div>
                         </div>
-                        ${item.phone ? `
+                        ${displayPhone ? `
                             <a href="https://wa.me/${waPhone}?text=${waMessage}" target="_blank" class="px-2.5 py-1.5 rounded-lg bg-emerald-50 text-emerald-700 border border-emerald-200 font-bold flex items-center gap-1.5 active:scale-95 transition">
                                 <i class="fa-brands fa-whatsapp text-sm text-emerald-600"></i>
-                                <span>${escapeHtml(item.phone)}</span>
+                                <span>${escapeHtml(displayPhone)}</span>
                             </a>
                         ` : ''}
                     </div>
@@ -727,8 +763,8 @@
                 } else if (currentStatus === 'OFF') {
                     selectStyle = 'bg-slate-100 text-slate-700 border-slate-300';
                 }
-
-                const cleanPhone = (item.phone || '').replace(/[^0-9]/g, '');
+                const cleanPhone = normalizePhone(item.phone).replace(/[^0-9]/g, '');
+                const displayPhone = normalizePhone(item.phone);
                 const waPhone = cleanPhone.startsWith('0') ? '62' + cleanPhone.slice(1) : cleanPhone;
                 const waMessage = encodeURIComponent(`Halo ${String(item.custName || '').toUpperCase()}, rincian tagihan internet Anda periode ${NAMA_BULAN[item.bulan]} ${item.tahun} sebesar ${formatRupiah(item.total)}. Status: ${currentStatus}. Terima kasih.`);
 
@@ -742,9 +778,9 @@
                     <!-- Alamat & No HP -->
                     <td class="py-3.5 px-4">
                         <div class="text-xs text-slate-700 max-w-[230px] uppercase font-medium" title="${escapeHtml(item.address)}">${escapeHtml(String(item.address || '').toUpperCase())}</div>
-                        ${item.phone ? `
+                        ${displayPhone ? `
                             <div class="mt-1 flex items-center gap-1.5">
-                                <span class="text-xs text-slate-500">${escapeHtml(item.phone)}</span>
+                                <span class="text-xs text-slate-500">${escapeHtml(displayPhone)}</span>
                                 <a href="https://wa.me/${waPhone}?text=${waMessage}" target="_blank" title="Kirim Info Tagihan via WhatsApp" class="text-emerald-600 hover:text-emerald-700 text-xs">
                                     <i class="fa-brands fa-whatsapp"></i>
                                 </a>
@@ -945,7 +981,7 @@
                         if (!custName) return;
 
                         const address = String(row['ALAMAT'] || row['Alamat'] || '-').trim().toUpperCase();
-                        const phone = String(row['NO.HP'] || row['No HP'] || '').trim();
+                        const phone = normalizePhone(row['NO.HP'] || row['No HP'] || '');
                         const paket = parseFloat(String(row['PAKET'] || row['Paket'] || '0').replace(/[^0-9.-]/g, '')) || 0;
                         const diskon = parseFloat(String(row['DISKON'] || row['Diskon'] || '0').replace(/[^0-9.-]/g, '')) || 0;
                         const telat = parseFloat(String(row['TELAT'] || row['Telat'] || '0').replace(/[^0-9.-]/g, '')) || 0;
@@ -1036,8 +1072,6 @@
         function executeExportData() {
             closeExportConfirmModal();
 
-            const fBulan = document.getElementById('filter-bulan').value;
-            const fTahun = document.getElementById('filter-tahun').value;
             const dataToExport = getFilteredDataForExport();
 
             if (dataToExport.length === 0) {
@@ -1065,8 +1099,14 @@
             const workbook = XLSX.utils.book_new();
             XLSX.utils.book_append_sheet(workbook, worksheet, 'Tagihan_Pelanggan');
 
-            const periodeName = (fBulan === 'ALL' ? 'SemuaBulan' : NAMA_BULAN[parseInt(fBulan)]) + '_' + (fTahun === 'ALL' ? 'SemuaTahun' : fTahun);
-            const fileName = `LIKE_Billing_PRO_${periodeName}.xlsx`;
+            const now = new Date();
+            const pad2 = (n) => String(n).padStart(2, '0');
+            const tgl = pad2(now.getDate());
+            const bln = pad2(now.getMonth() + 1);
+            const thn = now.getFullYear();
+            const jam = pad2(now.getHours());
+            const menit = pad2(now.getMinutes());
+            const fileName = `TAGIHAN-${tgl}${bln}${thn}-${jam}${menit}.xlsx`;
 
             XLSX.writeFile(workbook, fileName);
             showToast(`Berhasil menyimpan ${dataToExport.length} data ke file ${fileName}.`, 'success');
@@ -1273,6 +1313,7 @@
                     ...b,
                     custName: String(b.custName || '').toUpperCase(),
                     address: String(b.address || '').toUpperCase(),
+                    phone: normalizePhone(b.phone),
                     status: normalizeStatus(b.status)
                 }));
             } else {
