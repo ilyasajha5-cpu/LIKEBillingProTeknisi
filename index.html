@@ -96,6 +96,34 @@
         </div>
     </div>
 
+    <!-- Modal Konfirmasi Kirim Data (2 Pilihan: Batal & Ya, Lanjutkan) -->
+    <div id="export-confirm-modal" class="fixed inset-0 bg-slate-900/65 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+        <div class="bg-white rounded-3xl shadow-2xl border border-slate-100 max-w-md w-full p-6 fade-in">
+            <div class="flex items-center gap-3.5 mb-3">
+                <div class="w-11 h-11 rounded-2xl bg-blue-100 text-blue-600 flex items-center justify-center shrink-0">
+                    <i class="fa-solid fa-file-export text-xl"></i>
+                </div>
+                <h3 class="text-lg font-bold text-slate-800">Konfirmasi Kirim Data</h3>
+            </div>
+            <p class="text-sm text-slate-600 leading-relaxed mb-2">
+                Apakah Anda yakin untuk menyimpan data tagihan yang sudah di-update?
+            </p>
+            <div class="p-3 rounded-2xl bg-amber-50 border border-amber-200/80 text-xs text-amber-800 font-medium mb-5 flex items-start gap-2">
+                <i class="fa-solid fa-circle-exclamation text-amber-600 mt-0.5 shrink-0"></i>
+                <span>Mohon untuk diperiksa kembali data status dan keterangan pelanggan sebelum memilih <strong>"Ya, Lanjutkan"</strong>.</span>
+            </div>
+            <div class="flex justify-end gap-2.5">
+                <button onclick="closeExportConfirmModal()" class="px-5 py-2.5 rounded-2xl text-xs sm:text-sm font-semibold text-slate-600 bg-slate-100 hover:bg-slate-200 transition">
+                    Batal
+                </button>
+                <button onclick="executeExportData()" class="px-6 py-2.5 rounded-2xl text-xs sm:text-sm font-bold text-white bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 shadow-md shadow-blue-600/20 active:scale-[0.98] transition flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-floppy-disk"></i>
+                    <span>Ya, Lanjutkan</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- Banner / Modal Instalasi Aplikasi (PC, Android & iOS) -->
     <div id="install-banner" class="fixed bottom-4 left-4 right-4 sm:left-auto sm:right-6 sm:max-w-md z-50 hidden fade-in">
         <div class="bg-slate-900 text-white rounded-2xl shadow-2xl border border-slate-700 p-4 flex items-center gap-3.5">
@@ -167,7 +195,7 @@
                 <div class="flex items-center justify-between gap-2 shrink-0">
                     <div class="flex items-center gap-3">
                         <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-gradient-to-tr from-blue-500 via-indigo-500 to-cyan-400 text-white flex items-center justify-center shadow-lg shadow-blue-500/40 ring-2 ring-white/15 shrink-0">
-                            <i class="fa-solid fa-wifi text-base sm:text-lg"></i>
+                            <i class="fa-solid fa-file-invoice-dollar text-base sm:text-lg"></i>
                         </div>
                         <div>
                             <h1 class="font-black text-transparent bg-clip-text bg-gradient-to-r from-white via-blue-100 to-cyan-300 text-base sm:text-xl tracking-tight leading-tight">LIKE Billing PRO</h1>
@@ -247,50 +275,34 @@
                 </select>
             </div>
 
-            <!-- FILTER PENCARIAN, ALAMAT, STATUS & AKSI EXCEL (Proporsional di Mobile & Desktop) -->
-            <div class="bg-white/95 backdrop-blur-md rounded-3xl p-3.5 sm:p-5 shadow-[0_10px_35px_-5px_rgba(15,23,42,0.08)] border border-white space-y-3">
-                <!-- Pencarian Teks -->
-                <div class="relative w-full group">
-                    <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 sm:pl-4 text-slate-400 group-focus-within:text-blue-600 transition-colors">
-                        <i class="fa-solid fa-magnifying-glass text-xs sm:text-sm"></i>
-                    </span>
-                    <input type="text" id="search-input" onkeyup="renderTable()" placeholder="Cari Nama, Alamat, No. HP, Petugas..." 
-                        class="w-full pl-10 sm:pl-11 pr-4 py-2.5 sm:py-3 bg-slate-100/75 border border-slate-200/80 rounded-2xl text-xs sm:text-sm font-medium text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 focus:bg-white transition-all shadow-inner">
+            <!-- Panel Pencarian & Filter Data -->
+            <div class="bg-white/95 backdrop-blur-md rounded-3xl p-4 sm:p-5 shadow-[0_10px_35px_-5px_rgba(15,23,42,0.08)] border border-white space-y-3">
+                <!-- Baris Pencarian Utama -->
+                <div class="relative w-full">
+                    <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+                    <input type="text" id="search-input" onkeyup="renderTable(true)" placeholder="Cari Nama Pelanggan, Alamat, No. HP, atau Petugas..."
+                        class="w-full pl-11 pr-4 py-2.5 sm:py-3 bg-slate-100/80 hover:bg-slate-100 focus:bg-white border border-slate-200/90 focus:border-blue-500 rounded-2xl text-xs sm:text-sm text-slate-800 placeholder-slate-400 outline-none focus:ring-2 focus:ring-blue-500/20 transition">
                 </div>
 
-                <!-- Baris Filter Alamat, Status & Tombol Aksi Excel -->
-                <div class="grid grid-cols-1 sm:flex sm:flex-wrap items-center gap-2.5 sm:gap-3">
-                    <div class="flex items-center gap-2 bg-slate-100/80 hover:bg-slate-100 px-3.5 py-2.5 sm:py-2 rounded-2xl border border-slate-200/80 transition w-full sm:w-auto">
+                <!-- Baris Filter Alamat & Status (Tanpa Tombol Ambil/Kirim Data di Atas) -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 items-center gap-2.5 sm:gap-3">
+                    <div class="flex items-center gap-2 bg-slate-100/80 hover:bg-slate-100 px-3.5 py-2.5 sm:py-2 rounded-2xl border border-slate-200/80 transition w-full">
                         <i class="fa-solid fa-location-dot text-blue-600 text-xs shrink-0"></i>
                         <span class="text-xs font-semibold text-slate-500 whitespace-nowrap">Alamat:</span>
-                        <select id="filter-alamat" onchange="renderTable()" class="bg-transparent text-slate-800 text-xs sm:text-sm font-bold outline-none flex-1 sm:w-44 uppercase cursor-pointer">
+                        <select id="filter-alamat" onchange="renderTable(true)" class="bg-transparent text-slate-800 text-xs sm:text-sm font-bold outline-none flex-1 uppercase cursor-pointer">
                             <option value="ALL">SEMUA ALAMAT</option>
                         </select>
                     </div>
 
-                    <div class="flex items-center gap-2 bg-slate-100/80 hover:bg-slate-100 px-3.5 py-2.5 sm:py-2 rounded-2xl border border-slate-200/80 transition w-full sm:w-auto">
+                    <div class="flex items-center gap-2 bg-slate-100/80 hover:bg-slate-100 px-3.5 py-2.5 sm:py-2 rounded-2xl border border-slate-200/80 transition w-full">
                         <i class="fa-solid fa-filter text-indigo-600 text-xs shrink-0"></i>
                         <span class="text-xs font-semibold text-slate-500 whitespace-nowrap">Status:</span>
-                        <select id="filter-status" onchange="renderTable()" class="bg-transparent text-slate-800 text-xs sm:text-sm font-bold outline-none flex-1 sm:w-36 uppercase cursor-pointer">
+                        <select id="filter-status" onchange="renderTable(true)" class="bg-transparent text-slate-800 text-xs sm:text-sm font-bold outline-none flex-1 uppercase cursor-pointer">
                             <option value="ALL">SEMUA STATUS</option>
                             <option value="BELUM LUNAS">BELUM LUNAS</option>
                             <option value="LUNAS">LUNAS</option>
                             <option value="OFF">OFF</option>
                         </select>
-                    </div>
-
-                    <input type="file" id="excel-file-input" accept=".xlsx, .xls, .csv" class="hidden" onchange="handleImportExcel(event)">
-                    
-                    <div class="grid grid-cols-2 sm:flex items-center gap-2.5 w-full sm:w-auto">
-                        <button onclick="confirmAmbilData()" class="px-4 py-2.5 bg-gradient-to-r from-emerald-500 via-emerald-600 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white text-xs sm:text-sm font-bold rounded-2xl shadow-lg shadow-emerald-600/25 hover:shadow-xl hover:shadow-emerald-600/35 active:scale-[0.98] transition-all flex items-center justify-center gap-2">
-                            <i class="fa-solid fa-file-import"></i>
-                            <span>Ambil Data</span>
-                        </button>
-
-                        <button onclick="exportToExcel()" class="px-4 py-2.5 bg-gradient-to-r from-blue-600 via-indigo-600 to-slate-900 hover:from-blue-700 hover:to-black text-white text-xs sm:text-sm font-bold rounded-2xl shadow-lg shadow-blue-700/25 hover:shadow-xl hover:shadow-blue-700/35 active:scale-[0.98] transition-all flex items-center justify-center gap-2">
-                            <i class="fa-solid fa-file-export"></i>
-                            <span>Kirim Data</span>
-                        </button>
                     </div>
                 </div>
             </div>
@@ -301,7 +313,7 @@
             </div>
 
             <!-- TABEL DATA TAGIHAN (KHUSUS TABLET & PC DESKTOP) -->
-            <div class="hidden md:block bg-white/95 backdrop-blur-md rounded-3xl shadow-[0_12px_40px_-8px_rgba(15,23,42,0.09)] border border-white overflow-hidden">
+            <div id="billing-desktop-table" class="hidden md:block bg-white/95 backdrop-blur-md rounded-3xl shadow-[0_12px_40px_-8px_rgba(15,23,42,0.09)] border border-white overflow-hidden">
                 <div class="overflow-x-auto">
                     <table class="w-full text-left border-collapse">
                         <thead>
@@ -329,7 +341,33 @@
                     <i class="fa-solid fa-folder-open text-2xl sm:text-3xl"></i>
                 </div>
                 <h4 class="text-base sm:text-lg font-extrabold text-slate-800">Belum Ada Data Tagihan</h4>
-                <p class="text-xs sm:text-sm text-slate-500 max-w-md mx-auto mt-1.5 leading-relaxed">Data tagihan untuk periode atau filter ini masih kosong. Silakan ketuk tombol <strong class="text-emerald-600">"Ambil Data"</strong> di atas untuk memuat daftar pelanggan.</p>
+                <p class="text-xs sm:text-sm text-slate-500 max-w-md mx-auto mt-1.5 leading-relaxed">Data tagihan untuk periode atau filter ini masih kosong. Silakan ketuk tombol <strong class="text-emerald-600">"Ambil Data"</strong> di bawah untuk memuat daftar pelanggan.</p>
+            </div>
+
+            <!-- KONTROL HALAMAN (PAGINATION 25 DATA PER HALAMAN) -->
+            <div id="pagination-controls" class="hidden bg-white/95 backdrop-blur-md rounded-3xl p-3.5 sm:px-5 sm:py-3.5 shadow-[0_8px_28px_-6px_rgba(15,23,42,0.08)] border border-white flex flex-col sm:flex-row items-center justify-between gap-3">
+                <div id="pagination-info" class="text-xs font-semibold text-slate-600 text-center sm:text-left">
+                    Menampilkan 1 - 25 dari 0 data
+                </div>
+                <div id="pagination-buttons" class="flex flex-wrap items-center justify-center gap-1.5">
+                    <!-- Tombol Prev, Nomor Halaman & Next dirender via JS -->
+                </div>
+            </div>
+
+            <!-- PANEL BAWAH TABEL: TOMBOL AMBIL DATA & KIRIM DATA -->
+            <div class="bg-white/95 backdrop-blur-md rounded-3xl p-3.5 sm:p-4 shadow-[0_10px_35px_-5px_rgba(15,23,42,0.08)] border border-white">
+                <input type="file" id="excel-file-input" accept=".xlsx, .xls, .csv" class="hidden" onchange="handleImportExcel(event)">
+                <div class="grid grid-cols-2 sm:flex sm:justify-end items-center gap-2.5 sm:gap-3">
+                    <button onclick="confirmAmbilData()" class="px-5 py-3 bg-gradient-to-r from-emerald-500 via-emerald-600 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white text-xs sm:text-sm font-bold rounded-2xl shadow-lg shadow-emerald-600/25 hover:shadow-xl hover:shadow-emerald-600/35 active:scale-[0.98] transition-all flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-file-import"></i>
+                        <span>Ambil Data</span>
+                    </button>
+
+                    <button onclick="confirmKirimData()" class="px-5 py-3 bg-gradient-to-r from-blue-600 via-indigo-600 to-slate-900 hover:from-blue-700 hover:to-black text-white text-xs sm:text-sm font-bold rounded-2xl shadow-lg shadow-blue-700/25 hover:shadow-xl hover:shadow-blue-700/35 active:scale-[0.98] transition-all flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-file-export"></i>
+                        <span>Kirim Data</span>
+                    </button>
+                </div>
             </div>
         </main>
 
@@ -428,9 +466,11 @@
         // State Aplikasi
         let billsData = [];
         let dbInstance = null;
+        let currentPage = 1;
+        const ITEMS_PER_PAGE = 25;
 
         // =====================================================================
-        // 3. RENDER TABEL, RINGKASAN STATISTIK & FILTER
+        // 3. RENDER TABEL, RINGKASAN STATISTIK, PAGINATION & FILTER
         // =====================================================================
         function updateAddressFilterOptions() {
             const select = document.getElementById('filter-alamat');
@@ -447,7 +487,80 @@
             }
         }
 
-        function renderTable() {
+        function goToPage(page) {
+            currentPage = page;
+            renderTable(false);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function renderPaginationControls(totalItems, totalPages, startIdx, endIdx) {
+            const container = document.getElementById('pagination-controls');
+            const infoEl = document.getElementById('pagination-info');
+            const buttonsEl = document.getElementById('pagination-buttons');
+
+            if (totalItems === 0) {
+                container.classList.add('hidden');
+                return;
+            }
+
+            container.classList.remove('hidden');
+            infoEl.innerHTML = `Menampilkan <span class="font-extrabold text-slate-900">${startIdx + 1} - ${endIdx}</span> dari <span class="font-extrabold text-blue-700">${totalItems}</span> pelanggan (Hal. ${currentPage}/${totalPages})`;
+
+            if (totalPages <= 1) {
+                buttonsEl.innerHTML = '';
+                return;
+            }
+
+            let html = '';
+
+            // Tombol Sebelumnya (Prev)
+            html += `
+                <button onclick="goToPage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}
+                    class="px-3 py-1.5 rounded-xl text-xs font-bold border transition flex items-center gap-1 ${currentPage === 1 ? 'bg-slate-100 text-slate-400 border-slate-200 cursor-not-allowed' : 'bg-white text-slate-700 border-slate-300 hover:bg-blue-50 hover:text-blue-700 hover:border-blue-300 active:scale-95'}">
+                    <i class="fa-solid fa-chevron-left text-[10px]"></i>
+                    <span>Prev</span>
+                </button>
+            `;
+
+            // Hitung rentang nomor halaman yang ditampilkan
+            let startPage = Math.max(1, currentPage - 2);
+            let endPage = Math.min(totalPages, startPage + 4);
+            if (endPage - startPage < 4) {
+                startPage = Math.max(1, endPage - 4);
+            }
+
+            if (startPage > 1) {
+                html += `<button onclick="goToPage(1)" class="w-8 h-8 rounded-xl text-xs font-bold border border-slate-300 bg-white text-slate-700 hover:bg-blue-50 transition">1</button>`;
+                if (startPage > 2) html += `<span class="px-1 text-xs text-slate-400">...</span>`;
+            }
+
+            for (let p = startPage; p <= endPage; p++) {
+                if (p === currentPage) {
+                    html += `<button class="w-8 h-8 rounded-xl text-xs font-extrabold bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md shadow-blue-600/25">${p}</button>`;
+                } else {
+                    html += `<button onclick="goToPage(${p})" class="w-8 h-8 rounded-xl text-xs font-bold border border-slate-300 bg-white text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition">${p}</button>`;
+                }
+            }
+
+            if (endPage < totalPages) {
+                if (endPage < totalPages - 1) html += `<span class="px-1 text-xs text-slate-400">...</span>`;
+                html += `<button onclick="goToPage(${totalPages})" class="w-8 h-8 rounded-xl text-xs font-bold border border-slate-300 bg-white text-slate-700 hover:bg-blue-50 transition">${totalPages}</button>`;
+            }
+
+            // Tombol Berikutnya (Next)
+            html += `
+                <button onclick="goToPage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''}
+                    class="px-3 py-1.5 rounded-xl text-xs font-bold border transition flex items-center gap-1 ${currentPage === totalPages ? 'bg-slate-100 text-slate-400 border-slate-200 cursor-not-allowed' : 'bg-white text-slate-700 border-slate-300 hover:bg-blue-50 hover:text-blue-700 hover:border-blue-300 active:scale-95'}">
+                    <span>Next</span>
+                    <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                </button>
+            `;
+
+            buttonsEl.innerHTML = html;
+        }
+
+        function renderTable(resetPage = false) {
+            if (resetPage) currentPage = 1;
             updateAddressFilterOptions();
 
             const fBulan = document.getElementById('filter-bulan').value;
@@ -475,7 +588,7 @@
                 return matchBulan && matchTahun && matchStatus && matchAlamat && matchSearch;
             });
 
-            // Hitung Statistik Total
+            // Hitung Statistik Total dari seluruh data terfilter
             let countLunas = 0, nomLunas = 0;
             let countBelum = 0, nomBelum = 0;
             let countOff = 0, nomOff = 0;
@@ -509,18 +622,33 @@
             const tbody = document.getElementById('billing-table-body');
             const mobileContainer = document.getElementById('billing-mobile-cards');
             const emptyState = document.getElementById('empty-state');
+            const desktopTableWrap = document.getElementById('billing-desktop-table');
 
             if (filteredData.length === 0) {
                 tbody.innerHTML = '';
                 mobileContainer.innerHTML = '';
                 emptyState.classList.remove('hidden');
+                if (desktopTableWrap) desktopTableWrap.classList.add('md:hidden');
+                renderPaginationControls(0, 0, 0, 0);
                 return;
             }
 
             emptyState.classList.add('hidden');
+            if (desktopTableWrap) desktopTableWrap.classList.remove('md:hidden');
 
-            // 1. Render Kartu Mobile (Android & iOS)
-            mobileContainer.innerHTML = filteredData.map((item) => {
+            // Potong data menjadi 25 item per halaman
+            const totalPages = Math.ceil(filteredData.length / ITEMS_PER_PAGE);
+            if (currentPage > totalPages) currentPage = totalPages;
+            if (currentPage < 1) currentPage = 1;
+
+            const startIdx = (currentPage - 1) * ITEMS_PER_PAGE;
+            const endIdx = Math.min(startIdx + ITEMS_PER_PAGE, filteredData.length);
+            const paginatedData = filteredData.slice(startIdx, endIdx);
+
+            renderPaginationControls(filteredData.length, totalPages, startIdx, endIdx);
+
+            // 1. Render Kartu Mobile (Android & iOS - Maksimal 25 data)
+            mobileContainer.innerHTML = paginatedData.map((item) => {
                 const currentStatus = normalizeStatus(item.status);
                 let selectStyle = 'bg-rose-50 text-rose-700 border-rose-200';
                 if (currentStatus === 'LUNAS') {
@@ -590,8 +718,8 @@
                 `;
             }).join('');
 
-            // 2. Render Tabel Desktop (PC & Tablet)
-            tbody.innerHTML = filteredData.map((item) => {
+            // 2. Render Tabel Desktop (PC & Tablet - Maksimal 25 data)
+            tbody.innerHTML = paginatedData.map((item) => {
                 const currentStatus = normalizeStatus(item.status);
                 let selectStyle = 'bg-rose-50 text-rose-700 border-rose-200';
                 if (currentStatus === 'LUNAS') {
@@ -851,7 +979,7 @@
                     if (importedList.length > 0) {
                         billsData = importedList;
                         await saveBillsToLocal();
-                        renderTable();
+                        renderTable(true);
                         showToast(`Berhasil memperbarui ${importedList.length} data pelanggan.`, 'success');
                     } else {
                         showToast('Tidak ada baris data pelanggan yang valid di file tersebut.', 'error');
@@ -865,14 +993,14 @@
             reader.readAsArrayBuffer(file);
         }
 
-        function exportToExcel() {
+        function getFilteredDataForExport() {
             const fBulan = document.getElementById('filter-bulan').value;
             const fTahun = document.getElementById('filter-tahun').value;
             const fAlamat = document.getElementById('filter-alamat').value;
             const fStatus = document.getElementById('filter-status').value;
             const fSearch = document.getElementById('search-input').value.toLowerCase().trim();
 
-            const dataToExport = billsData.filter(item => {
+            return billsData.filter(item => {
                 const matchBulan = (fBulan === 'ALL') || (String(item.bulan) === fBulan);
                 const matchTahun = (fTahun === 'ALL') || (String(item.tahun) === fTahun);
                 const itemStatus = normalizeStatus(item.status);
@@ -886,9 +1014,34 @@
                     (item.petugas && item.petugas.toLowerCase().includes(fSearch));
                 return matchBulan && matchTahun && matchStatus && matchAlamat && matchSearch;
             });
+        }
 
+        function confirmKirimData() {
+            const dataToExport = getFilteredDataForExport();
             if (dataToExport.length === 0) {
                 showToast('Tidak ada data untuk dikirim/export pada filter saat ini.', 'error');
+                return;
+            }
+            const modal = document.getElementById('export-confirm-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeExportConfirmModal() {
+            const modal = document.getElementById('export-confirm-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function executeExportData() {
+            closeExportConfirmModal();
+
+            const fBulan = document.getElementById('filter-bulan').value;
+            const fTahun = document.getElementById('filter-tahun').value;
+            const dataToExport = getFilteredDataForExport();
+
+            if (dataToExport.length === 0) {
+                showToast('Tidak ada data untuk disimpan.', 'error');
                 return;
             }
 
@@ -913,8 +1066,10 @@
             XLSX.utils.book_append_sheet(workbook, worksheet, 'Tagihan_Pelanggan');
 
             const periodeName = (fBulan === 'ALL' ? 'SemuaBulan' : NAMA_BULAN[parseInt(fBulan)]) + '_' + (fTahun === 'ALL' ? 'SemuaTahun' : fTahun);
-            XLSX.writeFile(workbook, `LIKE_Billing_PRO_${periodeName}.xlsx`);
-            showToast(`Berhasil mengirim ${dataToExport.length} data ke Excel.`, 'success');
+            const fileName = `LIKE_Billing_PRO_${periodeName}.xlsx`;
+
+            XLSX.writeFile(workbook, fileName);
+            showToast(`Berhasil menyimpan ${dataToExport.length} data ke file ${fileName}.`, 'success');
         }
 
         // =====================================================================
@@ -1108,12 +1263,12 @@
             await StorageEngine.setItem(STORAGE_KEYS.BILLS, billsData);
         }
 
-        // Memuat data tagihan dari memori perangkat saat aplikasi dibuka
+        // Memuat data tagihan dari memori perangkat saat aplikasi dibuka (kosong jika belum ada import)
         async function loadInitialData() {
             await StorageEngine.init();
 
             const savedBills = await StorageEngine.getItem(STORAGE_KEYS.BILLS);
-            if (Array.isArray(savedBills)) {
+            if (Array.isArray(savedBills) && savedBills.length > 0) {
                 billsData = savedBills.map(b => ({
                     ...b,
                     custName: String(b.custName || '').toUpperCase(),
@@ -1165,30 +1320,61 @@
             ctx.fillStyle = glow;
             ctx.fillRect(0, 0, size, size);
 
-            // Gambar Ikon Sinyal WiFi Putih
-            ctx.strokeStyle = '#ffffff';
-            ctx.lineCap = 'round';
-            const cx = size * 0.5;
-            const cy = size * 0.54;
+            // Gambar Ikon Struk Tagihan / Invoice Modern (Bukan WiFi)
+            const docW = size * 0.42;
+            const docH = size * 0.46;
+            const docX = (size - docW) * 0.5;
+            const docY = size * 0.17;
+            const docR = size * 0.06;
 
-            [0.30, 0.21, 0.12].forEach((rRatio) => {
-                ctx.lineWidth = size * 0.048;
+            ctx.fillStyle = '#ffffff';
+            ctx.beginPath();
+            ctx.moveTo(docX + docR, docY);
+            ctx.lineTo(docX + docW - docR, docY);
+            ctx.quadraticCurveTo(docX + docW, docY, docX + docW, docY + docR);
+            ctx.lineTo(docX + docW, docY + docH - docR);
+            ctx.quadraticCurveTo(docX + docW, docY + docH, docX + docW - docR, docY + docH);
+            ctx.lineTo(docX + docR, docY + docH);
+            ctx.quadraticCurveTo(docX, docY + docH, docX, docY + docH - docR);
+            ctx.lineTo(docX, docY + docR);
+            ctx.quadraticCurveTo(docX, docY, docX + docR, docY);
+            ctx.closePath();
+            ctx.fill();
+
+            // Garis rincian tagihan di dalam dokumen
+            ctx.strokeStyle = '#1d4ed8';
+            ctx.lineWidth = size * 0.032;
+            ctx.lineCap = 'round';
+
+            [0.32, 0.43].forEach((yRatio) => {
                 ctx.beginPath();
-                ctx.arc(cx, cy, size * rRatio, Math.PI * 1.22, Math.PI * 1.78);
+                ctx.moveTo(docX + docW * 0.22, size * yRatio);
+                ctx.lineTo(docX + docW * 0.78, size * yRatio);
                 ctx.stroke();
             });
 
-            // Titik pusat sinyal
-            ctx.fillStyle = '#34d399';
+            // Simbol "Rp" / Lencana Centang Hijau di sudut kanan bawah dokumen
+            const badgeR = size * 0.135;
+            const badgeX = docX + docW * 0.88;
+            const badgeY = docY + docH * 0.82;
+            ctx.fillStyle = '#10b981';
             ctx.beginPath();
-            ctx.arc(cx, cy, size * 0.045, 0, Math.PI * 2);
+            ctx.arc(badgeX, badgeY, badgeR, 0, Math.PI * 2);
             ctx.fill();
 
-            // Teks "LIKE" di bagian bawah ikon
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = size * 0.035;
+            ctx.beginPath();
+            ctx.moveTo(badgeX - badgeR * 0.42, badgeY + badgeR * 0.02);
+            ctx.lineTo(badgeX - badgeR * 0.1, badgeY + badgeR * 0.35);
+            ctx.lineTo(badgeX + badgeR * 0.45, badgeY - badgeR * 0.32);
+            ctx.stroke();
+
+            // Teks "LIKE PRO" di bagian bawah ikon
             ctx.fillStyle = '#ffffff';
             ctx.font = `900 ${Math.round(size * 0.15)}px Inter, Arial, sans-serif`;
             ctx.textAlign = 'center';
-            ctx.fillText('LIKE PRO', cx, size * 0.83);
+            ctx.fillText('LIKE PRO', size * 0.5, size * 0.84);
 
             return canvas.toDataURL('image/png');
         }
