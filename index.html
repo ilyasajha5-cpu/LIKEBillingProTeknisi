@@ -102,35 +102,56 @@
             <img id="install-banner-icon" alt="LIKE Billing PRO Icon" class="w-12 h-12 rounded-xl shrink-0 shadow-md border border-blue-400/30">
             <div class="flex-1 min-w-0">
                 <h4 class="text-sm font-bold text-white leading-tight">Instal LIKE Billing PRO</h4>
-                <p id="install-banner-desc" class="text-[11px] text-slate-300 mt-0.5 leading-snug">Pasang pintasan (shortcut) di layar utama untuk akses cepat & offline penuh.</p>
+                <p id="install-banner-desc" class="text-[11px] text-slate-300 mt-0.5 leading-snug">Pasang ikon aplikasi di layar utama PC, Android, atau iOS untuk akses cepat & offline.</p>
                 <div class="flex items-center gap-2 mt-2.5">
-                    <button id="btn-install-app" onclick="triggerInstallApp()" class="px-3.5 py-1.5 bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold rounded-lg shadow transition flex items-center gap-1.5">
-                        <i class="fa-solid fa-download"></i>
-                        <span>Instal Aplikasi</span>
+                    <button id="install-action-btn" onclick="triggerInstallApp()" class="px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white text-xs font-bold shadow-md transition">
+                        Instal Aplikasi
                     </button>
-                    <button onclick="dismissInstallBanner()" class="px-2.5 py-1.5 text-xs font-medium text-slate-400 hover:text-white transition">Nanti</button>
+                    <button onclick="dismissInstallBanner()" class="px-2.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-medium transition">
+                        Nanti
+                    </button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Modal Panduan Khusus iOS (Safari Add to Home Screen) -->
+    <!-- Modal Panduan Instalasi Khusus iOS (Safari iPhone / iPad) -->
     <div id="ios-install-modal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
         <div class="bg-white rounded-3xl shadow-2xl max-w-sm w-full p-6 fade-in text-center">
             <img id="ios-modal-icon" alt="LIKE Billing PRO Icon" class="w-16 h-16 rounded-2xl mx-auto shadow-lg mb-3">
             <h3 class="text-lg font-bold text-slate-800">Instal di iPhone / iPad</h3>
-            <p class="text-xs text-slate-500 mt-1">Ikuti 2 langkah mudah berikut agar shortcut & ikon aplikasi muncul di layar utama iOS Anda:</p>
+            <p class="text-xs text-slate-500 mt-1">Tambahkan shortcut aplikasi beserta ikonnya ke Layar Utama iOS Anda:</p>
             <div class="mt-4 space-y-3 text-left bg-slate-50 p-4 rounded-2xl border border-slate-200 text-xs text-slate-700">
                 <div class="flex items-center gap-3">
                     <span class="w-6 h-6 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center shrink-0">1</span>
-                    <span>Ketuk ikon <strong>Bagikan (Share)</strong> <i class="fa-solid fa-arrow-up-from-bracket text-blue-600 mx-0.5"></i> pada bar bawah/atas browser Safari.</span>
+                    <span>Ketuk ikon <strong>Bagikan (Share)</strong> <i class="fa-solid fa-arrow-up-from-bracket text-blue-600 mx-0.5"></i> di bilah bawah Safari.</span>
                 </div>
                 <div class="flex items-center gap-3">
                     <span class="w-6 h-6 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center shrink-0">2</span>
-                    <span>Geser ke bawah dan pilih <strong>"Tambah ke Layar Utama" (Add to Home Screen)</strong> <i class="fa-regular fa-square-plus text-blue-600 mx-0.5"></i>.</span>
+                    <span>Gulir ke bawah lalu pilih <strong>"Tambah ke Layar Utama" (Add to Home Screen)</strong>.</span>
                 </div>
             </div>
             <button onclick="closeIosModal()" class="mt-5 w-full py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold transition">Mengerti</button>
+        </div>
+    </div>
+
+    <!-- Modal Panduan Instalasi Android / PC jika browser belum memicu prompt otomatis -->
+    <div id="android-install-modal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+        <div class="bg-white rounded-3xl shadow-2xl max-w-sm w-full p-6 fade-in text-center">
+            <img id="android-modal-icon" alt="LIKE Billing PRO Icon" class="w-16 h-16 rounded-2xl mx-auto shadow-lg mb-3">
+            <h3 class="text-lg font-bold text-slate-800">Pasang Shortcut Aplikasi</h3>
+            <p class="text-xs text-slate-500 mt-1">Ikuti langkah cepat berikut agar ikon aplikasi muncul di layar utama HP / PC Anda:</p>
+            <div class="mt-4 space-y-3 text-left bg-slate-50 p-4 rounded-2xl border border-slate-200 text-xs text-slate-700">
+                <div class="flex items-center gap-3">
+                    <span class="w-6 h-6 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center shrink-0">1</span>
+                    <span>Ketuk ikon <strong>Menu Titik Tiga (⋮)</strong> di pojok kanan atas browser Chrome/Edge.</span>
+                </div>
+                <div class="flex items-center gap-3">
+                    <span class="w-6 h-6 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center shrink-0">2</span>
+                    <span>Pilih <strong>"Instal aplikasi" (Install app)</strong> atau <strong>"Tambahkan ke Layar utama"</strong>.</span>
+                </div>
+            </div>
+            <button onclick="closeAndroidModal()" class="mt-5 w-full py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold transition">Mengerti</button>
         </div>
     </div>
 
@@ -139,60 +160,61 @@
          ===================================================================== -->
     <div id="app-screen" class="flex flex-col min-h-screen">
         
-        <!-- Top Navigation Bar (Premium Deep Navy & Royal Blue Glass Header) -->
+        <!-- Top Navigation Bar (Responsif Mobile & Desktop) -->
         <header class="bg-gradient-to-r from-slate-900 via-blue-950 to-slate-900 text-white border-b border-blue-500/20 sticky top-0 z-30 shadow-xl shadow-slate-900/15">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex flex-wrap sm:flex-nowrap items-center justify-between gap-4">
-                <div class="flex items-center gap-3.5 shrink-0">
-                    <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-blue-500 via-indigo-500 to-cyan-400 text-white flex items-center justify-center shadow-lg shadow-blue-500/40 ring-2 ring-white/15">
-                        <i class="fa-solid fa-wifi text-lg"></i>
-                    </div>
-                    <div>
-                        <div class="flex items-center gap-2">
-                            <h1 class="font-black text-transparent bg-clip-text bg-gradient-to-r from-white via-blue-100 to-cyan-300 text-lg sm:text-xl tracking-tight leading-tight">LIKE Billing PRO</h1>
+            <div class="max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8 py-3 sm:py-3.5 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-2.5 lg:gap-4">
+                <!-- Baris Atas di Mobile / Sisi Kiri di Desktop -->
+                <div class="flex items-center justify-between gap-2 shrink-0">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-gradient-to-tr from-blue-500 via-indigo-500 to-cyan-400 text-white flex items-center justify-center shadow-lg shadow-blue-500/40 ring-2 ring-white/15 shrink-0">
+                            <i class="fa-solid fa-wifi text-base sm:text-lg"></i>
                         </div>
-                        <p class="text-[11px] text-blue-200/75 font-medium hidden sm:block">Sistem Manajemen Tagihan & Teknisi</p>
-                        <div class="flex items-center gap-2 mt-0.5">
-                            <div class="flex items-center gap-1.5 text-[11px] text-emerald-400 font-semibold" id="storage-status-badge">
+                        <div>
+                            <h1 class="font-black text-transparent bg-clip-text bg-gradient-to-r from-white via-blue-100 to-cyan-300 text-base sm:text-xl tracking-tight leading-tight">LIKE Billing PRO</h1>
+                            <p class="text-[11px] text-blue-200/75 font-medium hidden sm:block">Sistem Manajemen Tagihan & Teknisi</p>
+                            <div class="flex items-center gap-1.5 text-[10px] sm:text-[11px] text-emerald-400 font-semibold mt-0.5" id="storage-status-badge">
                                 <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_#34d399]"></span>
-                                <span id="storage-status-text">Memuat Penyimpanan...</span>
+                                <span id="storage-status-text">Penyimpanan Offline Aktif</span>
                             </div>
-                            <button id="header-install-btn" onclick="triggerInstallApp()" class="hidden px-2.5 py-0.5 bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-400 hover:to-cyan-400 text-slate-950 text-[10px] font-extrabold rounded-full shadow-md transition items-center gap-1">
-                                <i class="fa-solid fa-download"></i>
-                                <span>Instal App</span>
-                            </button>
                         </div>
                     </div>
+
+                    <!-- Tombol Instal App Selalu Mudah Dijangkau di Mobile Header -->
+                    <button id="header-install-btn" onclick="triggerInstallApp()" class="flex px-3 py-1.5 bg-gradient-to-r from-blue-500 to-cyan-400 hover:from-blue-400 hover:to-cyan-300 text-slate-950 text-[11px] font-extrabold rounded-xl shadow-lg shadow-blue-500/30 active:scale-95 transition items-center gap-1.5 shrink-0">
+                        <i class="fa-solid fa-download"></i>
+                        <span>Instal App</span>
+                    </button>
                 </div>
 
-                <!-- RINGKASAN STATISTIK SEBARIS DI SEBELAH KANAN LOGO -->
-                <div class="flex-1 text-xs text-slate-200 flex flex-wrap items-center justify-start sm:justify-end gap-x-3 gap-y-1">
-                    <div>
+                <!-- RINGKASAN STATISTIK (Grid Rapi 2 Kolom di HP, Sebaris di Desktop) -->
+                <div class="grid grid-cols-2 sm:flex sm:flex-wrap items-center justify-start lg:justify-end gap-x-3 gap-y-1.5 bg-white/5 sm:bg-transparent px-3 py-2 sm:p-0 rounded-2xl border border-white/10 sm:border-0 text-[11px] sm:text-xs text-slate-200">
+                    <div class="truncate">
                         <span class="text-blue-200/70">Periode:</span>
                         <span id="stat-periode-label" class="font-bold text-white">Periode terpilih</span>
                     </div>
-                    <span class="text-white/20">|</span>
+                    <span class="hidden sm:inline text-white/20">|</span>
                     <div>
-                        <span class="text-blue-200/70">Total Pelanggan:</span>
+                        <span class="text-blue-200/70">Pelanggan:</span>
                         <span id="stat-total-pelanggan" class="font-extrabold text-white">0</span>
                     </div>
-                    <span class="text-white/20">|</span>
+                    <span class="hidden sm:inline text-white/20">|</span>
                     <div>
                         <span class="text-emerald-400 font-semibold">Lunas (<span id="stat-count-lunas">0</span>):</span>
                         <span id="stat-nominal-lunas" class="font-extrabold text-emerald-300">Rp 0</span>
                     </div>
-                    <span class="text-white/20">|</span>
+                    <span class="hidden sm:inline text-white/20">|</span>
                     <div>
-                        <span class="text-rose-400 font-semibold">Belum Lunas (<span id="stat-count-belum">0</span>):</span>
+                        <span class="text-rose-400 font-semibold">Belum (<span id="stat-count-belum">0</span>):</span>
                         <span id="stat-nominal-belum" class="font-extrabold text-rose-300">Rp 0</span>
                     </div>
-                    <span class="text-white/20">|</span>
+                    <span class="hidden sm:inline text-white/20">|</span>
                     <div>
-                        <span class="text-slate-400 font-semibold">Status OFF (<span id="stat-count-off">0</span>):</span>
+                        <span class="text-slate-400 font-semibold">OFF (<span id="stat-count-off">0</span>):</span>
                         <span id="stat-nominal-off" class="font-bold text-slate-300">Rp 0</span>
                     </div>
-                    <span class="text-white/20">|</span>
+                    <span class="hidden sm:inline text-white/20">|</span>
                     <div>
-                        <span class="text-cyan-300 font-semibold">Total Tagihan:</span>
+                        <span class="text-cyan-300 font-semibold">Total:</span>
                         <span id="stat-nominal-total" class="font-black text-cyan-200">Rp 0</span>
                     </div>
                 </div>
@@ -200,7 +222,7 @@
         </header>
 
         <!-- KONTEN UTAMA: DATA TAGIHAN PELANGGAN -->
-        <main id="tab-tagihan" class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-5">
+        <main id="tab-tagihan" class="flex-1 max-w-7xl w-full mx-auto px-3.5 sm:px-6 lg:px-8 py-4 sm:py-6 space-y-4 sm:space-y-5">
             
             <!-- Filter Periode (Otomatis Waktu Sistem - Disembunyikan dari Tampilan) -->
             <div class="hidden">
@@ -225,31 +247,31 @@
                 </select>
             </div>
 
-            <!-- FILTER PENCARIAN, ALAMAT, STATUS & AKSI EXCEL -->
-            <div class="bg-white/95 backdrop-blur-md rounded-3xl p-4 sm:p-5 shadow-[0_10px_35px_-5px_rgba(15,23,42,0.08)] border border-white space-y-3.5">
+            <!-- FILTER PENCARIAN, ALAMAT, STATUS & AKSI EXCEL (Proporsional di Mobile & Desktop) -->
+            <div class="bg-white/95 backdrop-blur-md rounded-3xl p-3.5 sm:p-5 shadow-[0_10px_35px_-5px_rgba(15,23,42,0.08)] border border-white space-y-3">
                 <!-- Pencarian Teks -->
                 <div class="relative w-full group">
-                    <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-slate-400 group-focus-within:text-blue-600 transition-colors">
-                        <i class="fa-solid fa-magnifying-glass"></i>
+                    <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 sm:pl-4 text-slate-400 group-focus-within:text-blue-600 transition-colors">
+                        <i class="fa-solid fa-magnifying-glass text-xs sm:text-sm"></i>
                     </span>
-                    <input type="text" id="search-input" onkeyup="renderTable()" placeholder="Cari Nama Pelanggan, Alamat, No. HP, atau Petugas..." 
-                        class="w-full pl-11 pr-4 py-3 bg-slate-100/75 border border-slate-200/80 rounded-2xl text-sm font-medium text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 focus:bg-white transition-all shadow-inner">
+                    <input type="text" id="search-input" onkeyup="renderTable()" placeholder="Cari Nama, Alamat, No. HP, Petugas..." 
+                        class="w-full pl-10 sm:pl-11 pr-4 py-2.5 sm:py-3 bg-slate-100/75 border border-slate-200/80 rounded-2xl text-xs sm:text-sm font-medium text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 focus:bg-white transition-all shadow-inner">
                 </div>
 
                 <!-- Baris Filter Alamat, Status & Tombol Aksi Excel -->
-                <div class="flex flex-wrap items-center gap-3">
-                    <div class="flex items-center gap-2 bg-slate-100/80 hover:bg-slate-100 px-3.5 py-2 rounded-2xl border border-slate-200/80 transition">
-                        <i class="fa-solid fa-location-dot text-blue-600 text-xs"></i>
+                <div class="grid grid-cols-1 sm:flex sm:flex-wrap items-center gap-2.5 sm:gap-3">
+                    <div class="flex items-center gap-2 bg-slate-100/80 hover:bg-slate-100 px-3.5 py-2.5 sm:py-2 rounded-2xl border border-slate-200/80 transition w-full sm:w-auto">
+                        <i class="fa-solid fa-location-dot text-blue-600 text-xs shrink-0"></i>
                         <span class="text-xs font-semibold text-slate-500 whitespace-nowrap">Alamat:</span>
-                        <select id="filter-alamat" onchange="renderTable()" class="bg-transparent text-slate-800 text-xs sm:text-sm font-bold outline-none w-40 uppercase cursor-pointer">
+                        <select id="filter-alamat" onchange="renderTable()" class="bg-transparent text-slate-800 text-xs sm:text-sm font-bold outline-none flex-1 sm:w-44 uppercase cursor-pointer">
                             <option value="ALL">SEMUA ALAMAT</option>
                         </select>
                     </div>
 
-                    <div class="flex items-center gap-2 bg-slate-100/80 hover:bg-slate-100 px-3.5 py-2 rounded-2xl border border-slate-200/80 transition">
-                        <i class="fa-solid fa-filter text-indigo-600 text-xs"></i>
+                    <div class="flex items-center gap-2 bg-slate-100/80 hover:bg-slate-100 px-3.5 py-2.5 sm:py-2 rounded-2xl border border-slate-200/80 transition w-full sm:w-auto">
+                        <i class="fa-solid fa-filter text-indigo-600 text-xs shrink-0"></i>
                         <span class="text-xs font-semibold text-slate-500 whitespace-nowrap">Status:</span>
-                        <select id="filter-status" onchange="renderTable()" class="bg-transparent text-slate-800 text-xs sm:text-sm font-bold outline-none w-36 uppercase cursor-pointer">
+                        <select id="filter-status" onchange="renderTable()" class="bg-transparent text-slate-800 text-xs sm:text-sm font-bold outline-none flex-1 sm:w-36 uppercase cursor-pointer">
                             <option value="ALL">SEMUA STATUS</option>
                             <option value="BELUM LUNAS">BELUM LUNAS</option>
                             <option value="LUNAS">LUNAS</option>
@@ -259,20 +281,27 @@
 
                     <input type="file" id="excel-file-input" accept=".xlsx, .xls, .csv" class="hidden" onchange="handleImportExcel(event)">
                     
-                    <button onclick="confirmAmbilData()" class="px-4 py-2.5 bg-gradient-to-r from-emerald-500 via-emerald-600 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white text-xs sm:text-sm font-bold rounded-2xl shadow-lg shadow-emerald-600/25 hover:shadow-xl hover:shadow-emerald-600/35 active:scale-[0.98] transition-all flex items-center justify-center gap-2 shrink-0">
-                        <i class="fa-solid fa-file-import"></i>
-                        <span>Ambil Data</span>
-                    </button>
+                    <div class="grid grid-cols-2 sm:flex items-center gap-2.5 w-full sm:w-auto">
+                        <button onclick="confirmAmbilData()" class="px-4 py-2.5 bg-gradient-to-r from-emerald-500 via-emerald-600 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white text-xs sm:text-sm font-bold rounded-2xl shadow-lg shadow-emerald-600/25 hover:shadow-xl hover:shadow-emerald-600/35 active:scale-[0.98] transition-all flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-file-import"></i>
+                            <span>Ambil Data</span>
+                        </button>
 
-                    <button onclick="exportToExcel()" class="px-4 py-2.5 bg-gradient-to-r from-blue-600 via-indigo-600 to-slate-900 hover:from-blue-700 hover:to-black text-white text-xs sm:text-sm font-bold rounded-2xl shadow-lg shadow-blue-700/25 hover:shadow-xl hover:shadow-blue-700/35 active:scale-[0.98] transition-all flex items-center justify-center gap-2 shrink-0">
-                        <i class="fa-solid fa-file-export"></i>
-                        <span>Kirim Data</span>
-                    </button>
+                        <button onclick="exportToExcel()" class="px-4 py-2.5 bg-gradient-to-r from-blue-600 via-indigo-600 to-slate-900 hover:from-blue-700 hover:to-black text-white text-xs sm:text-sm font-bold rounded-2xl shadow-lg shadow-blue-700/25 hover:shadow-xl hover:shadow-blue-700/35 active:scale-[0.98] transition-all flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-file-export"></i>
+                            <span>Kirim Data</span>
+                        </button>
+                    </div>
                 </div>
             </div>
 
-            <!-- TABEL DATA TAGIHAN RESPONSIVE -->
-            <div class="bg-white/95 backdrop-blur-md rounded-3xl shadow-[0_12px_40px_-8px_rgba(15,23,42,0.09)] border border-white overflow-hidden">
+            <!-- TAMPILAN KARTU MOBILE (KHUSUS HP ANDROID & iOS - ANTI SCROLL SAMPING) -->
+            <div id="billing-mobile-cards" class="md:hidden space-y-3">
+                <!-- Kartu pelanggan mobile dirender via JavaScript -->
+            </div>
+
+            <!-- TABEL DATA TAGIHAN (KHUSUS TABLET & PC DESKTOP) -->
+            <div class="hidden md:block bg-white/95 backdrop-blur-md rounded-3xl shadow-[0_12px_40px_-8px_rgba(15,23,42,0.09)] border border-white overflow-hidden">
                 <div class="overflow-x-auto">
                     <table class="w-full text-left border-collapse">
                         <thead>
@@ -292,15 +321,15 @@
                         </tbody>
                     </table>
                 </div>
+            </div>
 
-                <!-- State Kosong jika belum ada data -->
-                <div id="empty-state" class="hidden py-16 px-4 text-center">
-                    <div class="inline-flex items-center justify-center w-20 h-20 rounded-3xl bg-gradient-to-br from-blue-50 to-indigo-100 text-blue-600 mb-4 shadow-inner ring-4 ring-blue-50/70">
-                        <i class="fa-solid fa-folder-open text-3xl"></i>
-                    </div>
-                    <h4 class="text-lg font-extrabold text-slate-800">Belum Ada Data Tagihan</h4>
-                    <p class="text-xs sm:text-sm text-slate-500 max-w-md mx-auto mt-1.5 leading-relaxed">Data tagihan untuk periode atau filter ini masih kosong. Silakan klik tombol <strong class="text-emerald-600">"Ambil Data"</strong> di atas untuk memuat daftar pelanggan.</p>
+            <!-- State Kosong jika belum ada data (Tampil Rapi di Mobile & Desktop) -->
+            <div id="empty-state" class="hidden bg-white/95 backdrop-blur-md rounded-3xl shadow-[0_12px_40px_-8px_rgba(15,23,42,0.09)] border border-white py-12 sm:py-16 px-4 text-center">
+                <div class="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 rounded-3xl bg-gradient-to-br from-blue-50 to-indigo-100 text-blue-600 mb-3.5 shadow-inner ring-4 ring-blue-50/70">
+                    <i class="fa-solid fa-folder-open text-2xl sm:text-3xl"></i>
                 </div>
+                <h4 class="text-base sm:text-lg font-extrabold text-slate-800">Belum Ada Data Tagihan</h4>
+                <p class="text-xs sm:text-sm text-slate-500 max-w-md mx-auto mt-1.5 leading-relaxed">Data tagihan untuk periode atau filter ini masih kosong. Silakan ketuk tombol <strong class="text-emerald-600">"Ambil Data"</strong> di atas untuk memuat daftar pelanggan.</p>
             </div>
         </main>
 
@@ -401,20 +430,572 @@
         let dbInstance = null;
 
         // =====================================================================
-        // 1. MULTI-LAYER STORAGE ENGINE (IndexedDB + LocalStorage + Persistent)
+        // 3. RENDER TABEL, RINGKASAN STATISTIK & FILTER
         // =====================================================================
+        function updateAddressFilterOptions() {
+            const select = document.getElementById('filter-alamat');
+            const currentVal = select.value;
+            const addresses = [...new Set(billsData.map(b => String(b.address || '').trim().toUpperCase()).filter(Boolean))].sort();
+            
+            select.innerHTML = '<option value="ALL">SEMUA ALAMAT</option>' + 
+                addresses.map(addr => `<option value="${escapeHtml(addr)}">${escapeHtml(addr)}</option>`).join('');
+            
+            if (addresses.includes(currentVal)) {
+                select.value = currentVal;
+            } else {
+                select.value = 'ALL';
+            }
+        }
+
+        function renderTable() {
+            updateAddressFilterOptions();
+
+            const fBulan = document.getElementById('filter-bulan').value;
+            const fTahun = document.getElementById('filter-tahun').value;
+            const fAlamat = document.getElementById('filter-alamat').value;
+            const fStatus = document.getElementById('filter-status').value;
+            const fSearch = document.getElementById('search-input').value.toLowerCase().trim();
+
+            const periodeText = (fBulan === 'ALL' ? 'Semua Bulan' : NAMA_BULAN[parseInt(fBulan)]) + ' ' + (fTahun === 'ALL' ? 'Semua Tahun' : fTahun);
+            document.getElementById('stat-periode-label').textContent = periodeText;
+
+            const filteredData = billsData.filter(item => {
+                const matchBulan = (fBulan === 'ALL') || (String(item.bulan) === fBulan);
+                const matchTahun = (fTahun === 'ALL') || (String(item.tahun) === fTahun);
+                const itemStatus = normalizeStatus(item.status);
+                const matchStatus = (fStatus === 'ALL') || (itemStatus === fStatus);
+                const itemAddr = String(item.address || '').trim().toUpperCase();
+                const matchAlamat = (fAlamat === 'ALL') || (itemAddr === fAlamat);
+                const matchSearch = !fSearch || 
+                    (item.custName && item.custName.toLowerCase().includes(fSearch)) ||
+                    (item.address && item.address.toLowerCase().includes(fSearch)) ||
+                    (item.phone && item.phone.toLowerCase().includes(fSearch)) ||
+                    (item.petugas && item.petugas.toLowerCase().includes(fSearch));
+                
+                return matchBulan && matchTahun && matchStatus && matchAlamat && matchSearch;
+            });
+
+            // Hitung Statistik Total
+            let countLunas = 0, nomLunas = 0;
+            let countBelum = 0, nomBelum = 0;
+            let countOff = 0, nomOff = 0;
+            let nomTotal = 0;
+
+            filteredData.forEach(item => {
+                const total = Number(item.total) || 0;
+                const st = normalizeStatus(item.status);
+                nomTotal += total;
+                if (st === 'LUNAS') {
+                    countLunas++;
+                    nomLunas += total;
+                } else if (st === 'OFF') {
+                    countOff++;
+                    nomOff += total;
+                } else {
+                    countBelum++;
+                    nomBelum += total;
+                }
+            });
+
+            document.getElementById('stat-total-pelanggan').textContent = filteredData.length;
+            document.getElementById('stat-count-lunas').textContent = countLunas;
+            document.getElementById('stat-nominal-lunas').textContent = formatRupiah(nomLunas);
+            document.getElementById('stat-count-belum').textContent = countBelum;
+            document.getElementById('stat-nominal-belum').textContent = formatRupiah(nomBelum);
+            document.getElementById('stat-count-off').textContent = countOff;
+            document.getElementById('stat-nominal-off').textContent = formatRupiah(nomOff);
+            document.getElementById('stat-nominal-total').textContent = formatRupiah(nomTotal);
+
+            const tbody = document.getElementById('billing-table-body');
+            const mobileContainer = document.getElementById('billing-mobile-cards');
+            const emptyState = document.getElementById('empty-state');
+
+            if (filteredData.length === 0) {
+                tbody.innerHTML = '';
+                mobileContainer.innerHTML = '';
+                emptyState.classList.remove('hidden');
+                return;
+            }
+
+            emptyState.classList.add('hidden');
+
+            // 1. Render Kartu Mobile (Android & iOS)
+            mobileContainer.innerHTML = filteredData.map((item) => {
+                const currentStatus = normalizeStatus(item.status);
+                let selectStyle = 'bg-rose-50 text-rose-700 border-rose-200';
+                if (currentStatus === 'LUNAS') {
+                    selectStyle = 'bg-emerald-50 text-emerald-700 border-emerald-200';
+                } else if (currentStatus === 'OFF') {
+                    selectStyle = 'bg-slate-100 text-slate-700 border-slate-300';
+                }
+
+                const cleanPhone = (item.phone || '').replace(/[^0-9]/g, '');
+                const waPhone = cleanPhone.startsWith('0') ? '62' + cleanPhone.slice(1) : cleanPhone;
+                const waMessage = encodeURIComponent(`Halo ${String(item.custName || '').toUpperCase()}, rincian tagihan internet Anda periode ${NAMA_BULAN[item.bulan]} ${item.tahun} sebesar ${formatRupiah(item.total)}. Status: ${currentStatus}. Terima kasih.`);
+
+                return `
+                <div class="bg-white/95 backdrop-blur-md rounded-2xl p-4 shadow-[0_6px_24px_-4px_rgba(15,23,42,0.07)] border border-slate-100 space-y-3">
+                    <!-- Baris Atas Kartu: Nama & Total Tagihan -->
+                    <div class="flex items-start justify-between gap-2">
+                        <div class="min-w-0 flex-1">
+                            <h3 class="font-extrabold text-slate-900 text-sm uppercase leading-snug break-words">${escapeHtml(String(item.custName || '').toUpperCase())}</h3>
+                            <p class="text-xs text-slate-600 uppercase mt-0.5 leading-snug"><i class="fa-solid fa-location-dot text-blue-500 mr-1"></i>${escapeHtml(String(item.address || '').toUpperCase())}</p>
+                        </div>
+                        <div class="text-right shrink-0">
+                            <span class="text-[10px] font-semibold text-slate-400 uppercase block">Total</span>
+                            <span class="text-sm font-black text-blue-700">${formatRupiah(item.total)}</span>
+                        </div>
+                    </div>
+
+                    <!-- Rincian Paket, Diskon, Telat & Petugas -->
+                    <div class="bg-slate-50/90 rounded-xl p-2.5 border border-slate-100 flex flex-wrap items-center justify-between gap-2 text-[11px]">
+                        <div class="space-y-0.5 text-slate-600">
+                            <div>Paket: <strong class="text-slate-800">${formatRupiah(item.paket)}</strong>
+                                ${Number(item.diskon) > 0 ? `<span class="text-emerald-600 font-semibold ml-1.5">(-${formatRupiah(item.diskon)})</span>` : ''}
+                                ${Number(item.telat) > 0 ? `<span class="text-rose-600 font-semibold ml-1.5">(+${formatRupiah(item.telat)})</span>` : ''}
+                            </div>
+                            <div class="text-slate-500"><i class="fa-solid fa-user-gear text-slate-400 mr-1"></i>Petugas: <strong class="text-slate-700">${escapeHtml(item.petugas || '-')}</strong></div>
+                        </div>
+                        ${item.phone ? `
+                            <a href="https://wa.me/${waPhone}?text=${waMessage}" target="_blank" class="px-2.5 py-1.5 rounded-lg bg-emerald-50 text-emerald-700 border border-emerald-200 font-bold flex items-center gap-1.5 active:scale-95 transition">
+                                <i class="fa-brands fa-whatsapp text-sm text-emerald-600"></i>
+                                <span>${escapeHtml(item.phone)}</span>
+                            </a>
+                        ` : ''}
+                    </div>
+
+                    <!-- Keterangan jika ada -->
+                    ${item.keterangan ? `
+                        <div class="text-xs text-slate-600 bg-amber-50/60 border border-amber-100 rounded-xl px-3 py-1.5">
+                            <span class="font-semibold text-amber-800">Ket:</span> ${escapeHtml(item.keterangan)}
+                        </div>
+                    ` : ''}
+
+                    <!-- Baris Aksi Kartu: Dropdown Status & Tombol Edit Keterangan -->
+                    <div class="flex items-center justify-between gap-2 pt-1 border-t border-slate-100">
+                        <select onchange="quickChangeStatus('${item.id}', this.value)"
+                            aria-label="Ubah status ${escapeHtml(item.custName)}"
+                            class="flex-1 text-xs font-extrabold uppercase px-3 py-2 rounded-xl border cursor-pointer outline-none focus:ring-2 focus:ring-blue-500 transition ${selectStyle}">
+                            <option value="BELUM LUNAS" ${currentStatus === 'BELUM LUNAS' ? 'selected' : ''}>BELUM LUNAS</option>
+                            <option value="LUNAS" ${currentStatus === 'LUNAS' ? 'selected' : ''}>LUNAS</option>
+                            <option value="OFF" ${currentStatus === 'OFF' ? 'selected' : ''}>OFF</option>
+                        </select>
+
+                        <button onclick="openFormModal('${item.id}')" class="px-3.5 py-2 rounded-xl bg-amber-50 text-amber-700 hover:bg-amber-100 border border-amber-200/80 text-xs font-bold flex items-center gap-1.5 active:scale-95 transition shrink-0">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                            <span>Edit Ket</span>
+                        </button>
+                    </div>
+                </div>
+                `;
+            }).join('');
+
+            // 2. Render Tabel Desktop (PC & Tablet)
+            tbody.innerHTML = filteredData.map((item) => {
+                const currentStatus = normalizeStatus(item.status);
+                let selectStyle = 'bg-rose-50 text-rose-700 border-rose-200';
+                if (currentStatus === 'LUNAS') {
+                    selectStyle = 'bg-emerald-50 text-emerald-700 border-emerald-200';
+                } else if (currentStatus === 'OFF') {
+                    selectStyle = 'bg-slate-100 text-slate-700 border-slate-300';
+                }
+
+                const cleanPhone = (item.phone || '').replace(/[^0-9]/g, '');
+                const waPhone = cleanPhone.startsWith('0') ? '62' + cleanPhone.slice(1) : cleanPhone;
+                const waMessage = encodeURIComponent(`Halo ${String(item.custName || '').toUpperCase()}, rincian tagihan internet Anda periode ${NAMA_BULAN[item.bulan]} ${item.tahun} sebesar ${formatRupiah(item.total)}. Status: ${currentStatus}. Terima kasih.`);
+
+                return `
+                <tr class="hover:bg-blue-50/40 transition-colors">
+                    <!-- Nama Pelanggan (Full Satu Baris) -->
+                    <td class="py-3.5 px-4 whitespace-nowrap">
+                        <div class="font-bold text-slate-800 uppercase">${escapeHtml(String(item.custName || '').toUpperCase())}</div>
+                    </td>
+
+                    <!-- Alamat & No HP -->
+                    <td class="py-3.5 px-4">
+                        <div class="text-xs text-slate-700 max-w-[230px] uppercase font-medium" title="${escapeHtml(item.address)}">${escapeHtml(String(item.address || '').toUpperCase())}</div>
+                        ${item.phone ? `
+                            <div class="mt-1 flex items-center gap-1.5">
+                                <span class="text-xs text-slate-500">${escapeHtml(item.phone)}</span>
+                                <a href="https://wa.me/${waPhone}?text=${waMessage}" target="_blank" title="Kirim Info Tagihan via WhatsApp" class="text-emerald-600 hover:text-emerald-700 text-xs">
+                                    <i class="fa-brands fa-whatsapp"></i>
+                                </a>
+                            </div>
+                        ` : '<span class="text-[11px] text-slate-400 italic">Tanpa No. HP</span>'}
+                    </td>
+
+                    <!-- Rincian Tagihan -->
+                    <td class="py-3.5 px-4 whitespace-nowrap text-xs">
+                        <div class="text-slate-600">Paket: <span class="font-medium text-slate-800">${formatRupiah(item.paket)}</span></div>
+                        ${Number(item.diskon) > 0 ? `<div class="text-emerald-600">Diskon: -${formatRupiah(item.diskon)}</div>` : ''}
+                        ${Number(item.telat) > 0 ? `<div class="text-rose-600">Telat: +${formatRupiah(item.telat)}</div>` : ''}
+                    </td>
+
+                    <!-- Total Tagihan -->
+                    <td class="py-3.5 px-4 whitespace-nowrap">
+                        <div class="font-bold text-slate-900">${formatRupiah(item.total)}</div>
+                    </td>
+
+                    <!-- Status (Bisa Langsung Dipilih BELUM LUNAS / LUNAS / OFF) -->
+                    <td class="py-3.5 px-4 whitespace-nowrap">
+                        <select onchange="quickChangeStatus('${item.id}', this.value)"
+                            aria-label="Ubah status ${escapeHtml(item.custName)}"
+                            class="text-xs font-bold uppercase px-3 py-1.5 rounded-full border cursor-pointer outline-none focus:ring-2 focus:ring-blue-500 transition ${selectStyle}">
+                            <option value="BELUM LUNAS" ${currentStatus === 'BELUM LUNAS' ? 'selected' : ''}>BELUM LUNAS</option>
+                            <option value="LUNAS" ${currentStatus === 'LUNAS' ? 'selected' : ''}>LUNAS</option>
+                            <option value="OFF" ${currentStatus === 'OFF' ? 'selected' : ''}>OFF</option>
+                        </select>
+                    </td>
+
+                    <!-- Petugas -->
+                    <td class="py-3.5 px-4 whitespace-nowrap">
+                        <div class="text-xs text-slate-600 flex items-center gap-1">
+                            <i class="fa-solid fa-user-gear text-slate-400 text-[10px]"></i>
+                            <span>${escapeHtml(item.petugas || '-')}</span>
+                        </div>
+                    </td>
+
+                    <!-- Keterangan -->
+                    <td class="py-3.5 px-4 text-xs text-slate-600 max-w-[180px] truncate" title="${escapeHtml(item.keterangan)}">
+                        ${escapeHtml(item.keterangan || '-')}
+                    </td>
+
+                    <!-- Tombol Edit Keterangan -->
+                    <td class="py-3.5 px-4 whitespace-nowrap text-center">
+                        <button onclick="openFormModal('${item.id}')" title="Edit Keterangan" class="w-8 h-8 rounded-lg bg-amber-50 text-amber-600 hover:bg-amber-100 flex items-center justify-center mx-auto transition">
+                            <i class="fa-solid fa-pen-to-square text-xs"></i>
+                        </button>
+                    </td>
+                </tr>
+                `;
+            }).join('');
+        }
+
+        // =====================================================================
+        // 4. KALENDER OTOMATIS (BULAN & TAHUN SISTEM PERANGKAT)
+        // =====================================================================
+        function initCalendarAutoFilter() {
+            const now = new Date();
+            const currentMonth = now.getMonth() + 1;
+            const currentYear = now.getFullYear();
+
+            const selectTahun = document.getElementById('filter-tahun');
+            selectTahun.innerHTML = '<option value="ALL">Semua Tahun</option>';
+            for (let y = currentYear - 2; y <= currentYear + 2; y++) {
+                selectTahun.innerHTML += `<option value="${y}">${y}</option>`;
+            }
+
+            document.getElementById('filter-bulan').value = String(currentMonth);
+            selectTahun.value = String(currentYear);
+        }
+
+        // =====================================================================
+        // 5. UBAH STATUS CEPAT & MODAL EDIT KETERANGAN
+        // =====================================================================
+        async function quickChangeStatus(id, newStatus) {
+            const idx = billsData.findIndex(b => b.id === id);
+            if (idx === -1) return;
+
+            const normalized = normalizeStatus(newStatus);
+            billsData[idx].status = normalized;
+            await saveBillsToLocal();
+            renderTable();
+            showToast(`Status ${billsData[idx].custName} diubah menjadi ${normalized}.`, 'success');
+        }
+
+        function openFormModal(id) {
+            const item = billsData.find(b => b.id === id);
+            if (!item) return;
+
+            document.getElementById('entry-id').value = item.id;
+            document.getElementById('form-cust-name').value = String(item.custName || '').toUpperCase();
+            document.getElementById('form-address').value = String(item.address || '').toUpperCase();
+            document.getElementById('form-total-display').value = formatRupiah(item.total);
+            document.getElementById('form-keterangan').value = item.keterangan || '';
+
+            const modal = document.getElementById('form-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeFormModal() {
+            const modal = document.getElementById('form-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        document.getElementById('billing-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const entryId = document.getElementById('entry-id').value;
+            const idx = billsData.findIndex(b => b.id === entryId);
+            if (idx !== -1) {
+                billsData[idx].keterangan = document.getElementById('form-keterangan').value.trim();
+                await saveBillsToLocal();
+                closeFormModal();
+                renderTable();
+                showToast('Keterangan tagihan berhasil diperbarui.', 'success');
+            }
+        });
+
+        // =====================================================================
+        // 6. AMBIL DATA (IMPORT EXCEL) & KIRIM DATA (EXPORT EXCEL)
+        // =====================================================================
+        function confirmAmbilData() {
+            showConfirmModal(
+                'Peringatan Ambil Data',
+                'Jika Anda memilih "Ya, Lanjutkan", seluruh data pelanggan lama akan dihapus dan diperbarui dengan data baru dari file yang diambil. Lanjutkan?',
+                () => {
+                    document.getElementById('excel-file-input').click();
+                }
+            );
+        }
+
+        function parsePeriodeExcel(periodeRaw, fallbackBulan, fallbackTahun) {
+            if (!periodeRaw && periodeRaw !== 0) {
+                return { bulan: fallbackBulan, tahun: fallbackTahun };
+            }
+            const str = String(periodeRaw).trim();
+
+            if (/^\d{5}$/.test(str)) {
+                const excelEpoch = new Date(Date.UTC(1899, 11, 30));
+                const dt = new Date(excelEpoch.getTime() + parseInt(str, 10) * 86400000);
+                if (!isNaN(dt.getTime())) {
+                    return { bulan: dt.getUTCMonth() + 1, tahun: dt.getUTCFullYear() };
+                }
+            }
+
+            const slashMatch = str.match(/^(\d{1,2})[\/\-](\d{4})$/);
+            if (slashMatch) {
+                return { bulan: parseInt(slashMatch[1], 10), tahun: parseInt(slashMatch[2], 10) };
+            }
+
+            const isoMatch = str.match(/^(\d{4})[\/\-](\d{1,2})/);
+            if (isoMatch) {
+                return { tahun: parseInt(isoMatch[1], 10), bulan: parseInt(isoMatch[2], 10) };
+            }
+
+            const lower = str.toLowerCase();
+            let foundMonth = fallbackBulan;
+            for (let m = 1; m <= 12; m++) {
+                if (lower.includes(NAMA_BULAN[m].toLowerCase())) {
+                    foundMonth = m;
+                    break;
+                }
+            }
+            const yearMatch = str.match(/(20\d{2})/);
+            const foundYear = yearMatch ? parseInt(yearMatch[1], 10) : fallbackTahun;
+            return { bulan: foundMonth, tahun: foundYear };
+        }
+
+        function handleImportExcel(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = async function(e) {
+                try {
+                    const data = new Uint8Array(e.target.result);
+                    const workbook = XLSX.read(data, { type: 'array' });
+                    const firstSheetName = workbook.SheetNames[0];
+                    const worksheet = workbook.Sheets[firstSheetName];
+                    const jsonRows = XLSX.utils.sheet_to_json(worksheet, { defval: '' });
+
+                    if (jsonRows.length === 0) {
+                        showToast('File Excel kosong atau format tidak terbaca.', 'error');
+                        event.target.value = '';
+                        return;
+                    }
+
+                    const now = new Date();
+                    const defaultBulan = parseInt(document.getElementById('filter-bulan').value) || (now.getMonth() + 1);
+                    const defaultTahun = parseInt(document.getElementById('filter-tahun').value) || now.getFullYear();
+
+                    const importedList = [];
+                    jsonRows.forEach((row, index) => {
+                        const custId = String(row['ID_Pelanggan'] || row['ID Pelanggan'] || `PLG-${Date.now()}-${index}`).trim();
+                        const custName = String(row['NAMA'] || row['Nama Pelanggan'] || '').trim().toUpperCase();
+                        if (!custName) return;
+
+                        const address = String(row['ALAMAT'] || row['Alamat'] || '-').trim().toUpperCase();
+                        const phone = String(row['NO.HP'] || row['No HP'] || '').trim();
+                        const paket = parseFloat(String(row['PAKET'] || row['Paket'] || '0').replace(/[^0-9.-]/g, '')) || 0;
+                        const diskon = parseFloat(String(row['DISKON'] || row['Diskon'] || '0').replace(/[^0-9.-]/g, '')) || 0;
+                        const telat = parseFloat(String(row['TELAT'] || row['Telat'] || '0').replace(/[^0-9.-]/g, '')) || 0;
+                        const rawTotal = parseFloat(String(row['TOTAL'] || row['Total'] || '0').replace(/[^0-9.-]/g, ''));
+                        const total = !isNaN(rawTotal) && rawTotal > 0 ? rawTotal : Math.max(0, paket - diskon + telat);
+                        const status = normalizeStatus(row['STATUS'] || row['Status']);
+                        const pppoe = String(row['USERNAME_PPPoE'] || row['PPPoE'] || '').trim();
+                        const keterangan = String(row['KETERANGAN'] || row['Keterangan'] || '').trim();
+                        const petugas = String(row['PETUGAS'] || row['Petugas'] || '').trim();
+                        const parsedPeriode = parsePeriodeExcel(row['PERIODE'] || row['Periode'], defaultBulan, defaultTahun);
+
+                        importedList.push({
+                            id: 'IMP-' + Date.now() + '-' + index,
+                            custId,
+                            custName,
+                            address,
+                            phone,
+                            pppoe,
+                            petugas,
+                            bulan: parsedPeriode.bulan,
+                            tahun: parsedPeriode.tahun,
+                            paket,
+                            diskon,
+                            telat,
+                            total,
+                            status,
+                            keterangan
+                        });
+                    });
+
+                    if (importedList.length > 0) {
+                        billsData = importedList;
+                        await saveBillsToLocal();
+                        renderTable();
+                        showToast(`Berhasil memperbarui ${importedList.length} data pelanggan.`, 'success');
+                    } else {
+                        showToast('Tidak ada baris data pelanggan yang valid di file tersebut.', 'error');
+                    }
+                } catch (err) {
+                    console.error(err);
+                    showToast('Gagal membaca file Excel. Pastikan format kolom sesuai.', 'error');
+                }
+                event.target.value = '';
+            };
+            reader.readAsArrayBuffer(file);
+        }
+
+        function exportToExcel() {
+            const fBulan = document.getElementById('filter-bulan').value;
+            const fTahun = document.getElementById('filter-tahun').value;
+            const fAlamat = document.getElementById('filter-alamat').value;
+            const fStatus = document.getElementById('filter-status').value;
+            const fSearch = document.getElementById('search-input').value.toLowerCase().trim();
+
+            const dataToExport = billsData.filter(item => {
+                const matchBulan = (fBulan === 'ALL') || (String(item.bulan) === fBulan);
+                const matchTahun = (fTahun === 'ALL') || (String(item.tahun) === fTahun);
+                const itemStatus = normalizeStatus(item.status);
+                const matchStatus = (fStatus === 'ALL') || (itemStatus === fStatus);
+                const itemAddr = String(item.address || '').trim().toUpperCase();
+                const matchAlamat = (fAlamat === 'ALL') || (itemAddr === fAlamat);
+                const matchSearch = !fSearch ||
+                    (item.custName && item.custName.toLowerCase().includes(fSearch)) ||
+                    (item.address && item.address.toLowerCase().includes(fSearch)) ||
+                    (item.phone && item.phone.toLowerCase().includes(fSearch)) ||
+                    (item.petugas && item.petugas.toLowerCase().includes(fSearch));
+                return matchBulan && matchTahun && matchStatus && matchAlamat && matchSearch;
+            });
+
+            if (dataToExport.length === 0) {
+                showToast('Tidak ada data untuk dikirim/export pada filter saat ini.', 'error');
+                return;
+            }
+
+            const excelRows = dataToExport.map(item => ({
+                'ID_Pelanggan': item.custId || '',
+                'NAMA': String(item.custName || '').toUpperCase(),
+                'ALAMAT': String(item.address || '').toUpperCase(),
+                'NO.HP': item.phone || '',
+                'PAKET': Number(item.paket) || 0,
+                'DISKON': Number(item.diskon) || 0,
+                'TELAT': Number(item.telat) || 0,
+                'TOTAL': Number(item.total) || 0,
+                'STATUS': normalizeStatus(item.status),
+                'USERNAME_PPPoE': item.pppoe || '',
+                'KETERANGAN': item.keterangan || '',
+                'PETUGAS': item.petugas || '',
+                'PERIODE': `${NAMA_BULAN[item.bulan]} ${item.tahun}`
+            }));
+
+            const worksheet = XLSX.utils.json_to_sheet(excelRows);
+            const workbook = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(workbook, worksheet, 'Tagihan_Pelanggan');
+
+            const periodeName = (fBulan === 'ALL' ? 'SemuaBulan' : NAMA_BULAN[parseInt(fBulan)]) + '_' + (fTahun === 'ALL' ? 'SemuaTahun' : fTahun);
+            XLSX.writeFile(workbook, `LIKE_Billing_PRO_${periodeName}.xlsx`);
+            showToast(`Berhasil mengirim ${dataToExport.length} data ke Excel.`, 'success');
+        }
+
+        // =====================================================================
+        // 7. UTILITAS FORMAT RUPIAH, TOAST & STORAGE ENGINE (INDEXEDDB + LS)
+        // =====================================================================
+        function formatRupiah(angka) {
+            const num = Number(angka) || 0;
+            return 'Rp ' + num.toLocaleString('id-ID');
+        }
+
+        function escapeHtml(text) {
+            if (text === null || text === undefined) return '';
+            return String(text)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+
+            let bgClass = 'bg-slate-800 text-white';
+            let iconHtml = '<i class="fa-solid fa-circle-info text-blue-400"></i>';
+
+            if (type === 'success') {
+                bgClass = 'bg-emerald-700 text-white';
+                iconHtml = '<i class="fa-solid fa-circle-check text-emerald-200"></i>';
+            } else if (type === 'error') {
+                bgClass = 'bg-rose-700 text-white';
+                iconHtml = '<i class="fa-solid fa-circle-exclamation text-rose-200"></i>';
+            }
+
+            toast.className = `${bgClass} px-4 py-3 rounded-xl shadow-lg text-xs font-medium flex items-center gap-2.5 fade-in pointer-events-auto`;
+            toast.innerHTML = `${iconHtml}<span>${escapeHtml(message)}</span>`;
+            container.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateY(-6px)';
+                toast.style.transition = 'all 0.25s ease';
+                setTimeout(() => toast.remove(), 250);
+            }, 3000);
+        }
+
+        function showConfirmModal(title, message, onConfirmCallback) {
+            const modal = document.getElementById('confirm-modal');
+            document.getElementById('confirm-title').textContent = title;
+            document.getElementById('confirm-message').textContent = message;
+
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+
+            const btnOk = document.getElementById('confirm-ok');
+            const btnCancel = document.getElementById('confirm-cancel');
+
+            const cleanup = () => {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+                btnOk.onclick = null;
+                btnCancel.onclick = null;
+            };
+
+            btnCancel.onclick = cleanup;
+            btnOk.onclick = () => {
+                cleanup();
+                if (typeof onConfirmCallback === 'function') onConfirmCallback();
+            };
+        }
+
         const StorageEngine = {
-            dbName: 'LikeBillingProDB',
-            storeName: 'keyval_store',
+            dbName: 'LIKE_Billing_PRO_DB',
+            storeName: 'app_store',
 
             async init() {
-                // Minta izin penyimpanan permanen ke browser Android/iOS/PC
                 if (navigator.storage && navigator.storage.persist) {
                     try {
                         await navigator.storage.persist();
-                    } catch (e) {
-                        console.warn('Persist storage request skipped:', e);
-                    }
+                    } catch (e) {}
                 }
 
                 return new Promise((resolve) => {
@@ -546,5 +1127,250 @@
         }
 
         // =====================================================================
-        // 2. KALENDER OTOMATIS & FORMAT RUPIAH
-// ... existing code ... -->
+        // 8. PWA ICON GENERATOR & AUTO-INSTALL PROMPT (PC, ANDROID & iOS)
+        // =====================================================================
+        let deferredInstallPrompt = null;
+
+        function generateAppIconDataUrl(size) {
+            const canvas = document.createElement('canvas');
+            canvas.width = size;
+            canvas.height = size;
+            const ctx = canvas.getContext('2d');
+
+            // Latar belakang gradien biru-indigo modern dengan sudut melengkung
+            const radius = size * 0.22;
+            const grad = ctx.createLinearGradient(0, 0, size, size);
+            grad.addColorStop(0, '#0f172a');
+            grad.addColorStop(0.5, '#1d4ed8');
+            grad.addColorStop(1, '#06b6d4');
+
+            ctx.beginPath();
+            ctx.moveTo(radius, 0);
+            ctx.lineTo(size - radius, 0);
+            ctx.quadraticCurveTo(size, 0, size, radius);
+            ctx.lineTo(size, size - radius);
+            ctx.quadraticCurveTo(size, size, size - radius, size);
+            ctx.lineTo(radius, size);
+            ctx.quadraticCurveTo(0, size, 0, size - radius);
+            ctx.lineTo(0, radius);
+            ctx.quadraticCurveTo(0, 0, radius, 0);
+            ctx.closePath();
+            ctx.fillStyle = grad;
+            ctx.fill();
+
+            // Lingkaran cahaya lembut di tengah
+            const glow = ctx.createRadialGradient(size * 0.5, size * 0.4, size * 0.05, size * 0.5, size * 0.45, size * 0.45);
+            glow.addColorStop(0, 'rgba(255,255,255,0.28)');
+            glow.addColorStop(1, 'rgba(255,255,255,0)');
+            ctx.fillStyle = glow;
+            ctx.fillRect(0, 0, size, size);
+
+            // Gambar Ikon Sinyal WiFi Putih
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineCap = 'round';
+            const cx = size * 0.5;
+            const cy = size * 0.54;
+
+            [0.30, 0.21, 0.12].forEach((rRatio) => {
+                ctx.lineWidth = size * 0.048;
+                ctx.beginPath();
+                ctx.arc(cx, cy, size * rRatio, Math.PI * 1.22, Math.PI * 1.78);
+                ctx.stroke();
+            });
+
+            // Titik pusat sinyal
+            ctx.fillStyle = '#34d399';
+            ctx.beginPath();
+            ctx.arc(cx, cy, size * 0.045, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Teks "LIKE" di bagian bawah ikon
+            ctx.fillStyle = '#ffffff';
+            ctx.font = `900 ${Math.round(size * 0.15)}px Inter, Arial, sans-serif`;
+            ctx.textAlign = 'center';
+            ctx.fillText('LIKE PRO', cx, size * 0.83);
+
+            return canvas.toDataURL('image/png');
+        }
+
+        function setupPwaAndIcons() {
+            const icon192 = generateAppIconDataUrl(192);
+            const icon512 = generateAppIconDataUrl(512);
+
+            const favicon = document.getElementById('pwa-favicon');
+            const appleIcon = document.getElementById('pwa-apple-icon');
+            const bannerIcon = document.getElementById('install-banner-icon');
+            const iosIcon = document.getElementById('ios-modal-icon');
+            const androidIcon = document.getElementById('android-modal-icon');
+
+            if (favicon) favicon.href = icon192;
+            if (appleIcon) appleIcon.href = icon192;
+            if (bannerIcon) bannerIcon.src = icon192;
+            if (iosIcon) iosIcon.src = icon192;
+            if (androidIcon) androidIcon.src = icon192;
+
+            // Buat Web App Manifest dinamis berbasis Data URI agar langsung terbaca saat page load
+            const startUrl = window.location.href.split('#')[0];
+            const manifestObj = {
+                name: 'LIKE Billing PRO - Manajemen Tagihan',
+                short_name: 'LIKE Billing',
+                description: 'Aplikasi Tagihan Pelanggan Offline untuk Teknisi & Admin',
+                start_url: startUrl,
+                scope: startUrl.substring(0, startUrl.lastIndexOf('/') + 1),
+                display: 'standalone',
+                background_color: '#0f172a',
+                theme_color: '#0f172a',
+                orientation: 'any',
+                icons: [
+                    { src: icon192, sizes: '192x192', type: 'image/png', purpose: 'any maskable' },
+                    { src: icon512, sizes: '512x512', type: 'image/png', purpose: 'any maskable' }
+                ]
+            };
+
+            const manifestDataUrl = 'data:application/manifest+json;charset=utf-8,' + encodeURIComponent(JSON.stringify(manifestObj));
+            const manifestLink = document.getElementById('pwa-manifest');
+            if (manifestLink) manifestLink.href = manifestDataUrl;
+
+            // Daftarkan Service Worker inline untuk dukungan cache offline
+            if ('serviceWorker' in navigator && window.location.protocol.startsWith('http')) {
+                const swCode = `
+                    const CACHE_NAME = 'like-billing-pro-v2';
+                    self.addEventListener('install', (e) => {
+                        self.skipWaiting();
+                    });
+                    self.addEventListener('activate', (e) => {
+                        e.waitUntil(clients.claim());
+                    });
+                    self.addEventListener('fetch', (e) => {
+                        if (e.request.method !== 'GET') return;
+                        e.respondWith(
+                            fetch(e.request).then((res) => {
+                                const resClone = res.clone();
+                                caches.open(CACHE_NAME).then((cache) => cache.put(e.request, resClone)).catch(() => {});
+                                return res;
+                            }).catch(() => caches.match(e.request))
+                        );
+                    });
+                `;
+                try {
+                    const swBlob = new Blob([swCode], { type: 'application/javascript' });
+                    const swUrl = URL.createObjectURL(swBlob);
+                    navigator.serviceWorker.register(swUrl).catch(() => {});
+                } catch (e) {}
+            }
+
+            const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+            const isIos = /iphone|ipad|ipod/i.test(navigator.userAgent);
+
+            // Jika sudah dijalankan dari shortcut (standalone), sembunyikan tombol instal
+            if (isStandalone) {
+                const headerBtn = document.getElementById('header-install-btn');
+                if (headerBtn) headerBtn.classList.add('hidden');
+                return;
+            }
+
+            // Dengarkan event instalasi otomatis Chrome / Edge / Android
+            window.addEventListener('beforeinstallprompt', (e) => {
+                e.preventDefault();
+                deferredInstallPrompt = e;
+                showInstallBanner('Klik "Instal Aplikasi" untuk memasang ikon LIKE Billing PRO di layar utama Anda.');
+            });
+
+            window.addEventListener('appinstalled', () => {
+                deferredInstallPrompt = null;
+                dismissInstallBanner();
+                const headerBtn = document.getElementById('header-install-btn');
+                if (headerBtn) headerBtn.classList.add('hidden');
+                showToast('Aplikasi LIKE Billing PRO berhasil dipasang ke layar utama!', 'success');
+            });
+
+            // Selalu tampilkan banner instalasi otomatis saat pertama kali dibuka di HP/PC (jika belum standalone)
+            setTimeout(() => {
+                if (!isStandalone && !sessionStorage.getItem('like_install_dismissed')) {
+                    if (isIos) {
+                        showInstallBanner('Pengguna iPhone/iPad: Ketuk "Instal Aplikasi" untuk menambah shortcut ke Layar Utama iOS.');
+                    } else {
+                        showInstallBanner('Pasang aplikasi LIKE Billing PRO ke layar utama HP / PC agar bisa dibuka offline kapan saja.');
+                    }
+                }
+            }, 900);
+        }
+
+        function showInstallBanner(descText) {
+            const banner = document.getElementById('install-banner');
+            const desc = document.getElementById('install-banner-desc');
+            if (desc && descText) desc.textContent = descText;
+            if (banner) banner.classList.remove('hidden');
+        }
+
+        function dismissInstallBanner() {
+            const banner = document.getElementById('install-banner');
+            if (banner) banner.classList.add('hidden');
+            sessionStorage.setItem('like_install_dismissed', '1');
+        }
+
+        async function triggerInstallApp() {
+            const isIos = /iphone|ipad|ipod/i.test(navigator.userAgent);
+            if (isIos) {
+                const modal = document.getElementById('ios-install-modal');
+                if (modal) {
+                    modal.classList.remove('hidden');
+                    modal.classList.add('flex');
+                }
+                return;
+            }
+
+            if (deferredInstallPrompt) {
+                deferredInstallPrompt.prompt();
+                const { outcome } = await deferredInstallPrompt.userChoice;
+                if (outcome === 'accepted') {
+                    deferredInstallPrompt = null;
+                    dismissInstallBanner();
+                }
+            } else {
+                const modal = document.getElementById('android-install-modal');
+                if (modal) {
+                    modal.classList.remove('hidden');
+                    modal.classList.add('flex');
+                }
+            }
+        }
+
+        function closeIosModal() {
+            const modal = document.getElementById('ios-install-modal');
+            if (modal) {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }
+        }
+
+        function closeAndroidModal() {
+            const modal = document.getElementById('android-install-modal');
+            if (modal) {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }
+        }
+
+        // =====================================================================
+        // 9. INISIALISASI SAAT APLIKASI DIBUKA & AUTO-SAVE MOBILE LIFECYCLE
+        // =====================================================================
+        document.addEventListener('DOMContentLoaded', async () => {
+            setupPwaAndIcons();
+            initCalendarAutoFilter();
+            await loadInitialData();
+            renderTable();
+        });
+
+        window.addEventListener('pagehide', () => {
+            saveBillsToLocal();
+        });
+
+        document.addEventListener('visibilitychange', () => {
+            if (document.visibilityState === 'hidden') {
+                saveBillsToLocal();
+            }
+        });
+    </script>
+</body>
+</html>
