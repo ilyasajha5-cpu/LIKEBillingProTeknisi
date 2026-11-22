@@ -1,4 +1,5 @@
 ID_LOG,TANGGAL,WAKTU,USERNAME,NAMA_USER,ROLE,TINDAKAN,MENU,TARGET_DATA,DETAIL_AKTIVITAS
+"LOG-1795325851412-425","22/11/2026","12:37:31","admin","Administrator Utama","Super Admin","EDIT","Tagihan Pelanggan","PLG006 - NOVITASARI","Ubah status tagihan NOVITASARI (November 2026) dari BARU menjadi BELUM LUNAS"
 "LOG-1795325850266-104","22/11/2026","12:37:30","admin","Administrator Utama","Super Admin","EDIT","Tagihan Pelanggan","PLG014 - AYU","Ubah status tagihan AYU (November 2026) dari BARU menjadi BELUM LUNAS"
 "LOG-1795325849138-317","22/11/2026","12:37:29","admin","Administrator Utama","Super Admin","EDIT","Tagihan Pelanggan","PLG007 - RISAL","Ubah status tagihan RISAL (November 2026) dari BARU menjadi BELUM LUNAS"
 "LOG-1795325848234-255","22/11/2026","12:37:28","admin","Administrator Utama","Super Admin","EDIT","Tagihan Pelanggan","PLG008 - NURI","Ubah status tagihan NURI (November 2026) dari BARU menjadi BELUM LUNAS"
