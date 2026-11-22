@@ -1,4 +1,5 @@
 ID_LOG,TANGGAL,WAKTU,USERNAME,NAMA_USER,ROLE,TINDAKAN,MENU,TARGET_DATA,DETAIL_AKTIVITAS
+"LOG-1795325352903-421","22/11/2026","12:29:12","admin","Administrator Utama","Super Admin","LOGIN","Autentikasi Sistem","admin","User Administrator Utama (@admin) masuk sebagai Super Admin"
 "LOG-1795325338229-410","22/11/2026","12:28:58","admin","Administrator Utama","Super Admin","LOGIN","Autentikasi Sistem","admin","User Administrator Utama (@admin) keluar / logout dari aplikasi"
 "LOG-1795325331654-737","22/11/2026","12:28:51","admin","Administrator Utama","Super Admin","LOGIN","Autentikasi Sistem","admin","User Administrator Utama (@admin) masuk sebagai Super Admin"
 "LOG-1795325301693-801","22/11/2026","12:28:21","admin","Administrator Utama","Super Admin","LOGIN","Autentikasi Sistem","admin","User Administrator Utama (@admin) keluar / logout dari aplikasi"
